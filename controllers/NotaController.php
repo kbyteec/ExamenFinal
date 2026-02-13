@@ -31,4 +31,24 @@ class NotaController {
         $alumno = $this->alumnoModel->obtenerPorId($alumno_id);
         require __DIR__ . '/../views/notas/crear.php';
     }
+
+    public function editar() {
+
+        $id = $_GET['id'];
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+            $nota = $_POST['nota'];
+
+            if ($nota >= 0 && $nota <= 10) {
+                $this->notaModel->actualizar($id, $nota);
+            }
+
+            header("Location: index.php?action=listar");
+            exit;
+        }
+
+        $notaData = $this->notaModel->obtenerPorId($id);
+        require __DIR__ . '/../views/notas/editar.php';
+    }
 }

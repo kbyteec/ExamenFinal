@@ -72,4 +72,28 @@ class Nota {
             return "Sobresaliente";
         }
     }
+
+    public function obtenerPorId($id) {
+
+        $sql = "SELECT * FROM {$this->table} WHERE id = :id";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([':id' => $id]);
+
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function actualizar($id, $nota) {
+
+        $sql = "UPDATE {$this->table}
+                SET nota = :nota
+                WHERE id = :id";
+
+        $stmt = $this->conn->prepare($sql);
+
+        return $stmt->execute([
+            ':id' => $id,
+            ':nota' => $nota
+        ]);
+    }
+
 }
